@@ -1,0 +1,201 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Administrador",
+      "email": "admin@eletromaquinas.com",
+      "password": "admin123",
+      "role": "admin",
+      "createdAt": "2026-02-04T14:53:03.535Z"
+    },
+    {
+      "id": 2,
+      "name": "Vendedor Teste",
+      "email": "vendedor@eletromaquinas.com",
+      "password": "vendedor123",
+      "role": "vendedor",
+      "createdAt": "2026-02-04T14:53:03.538Z"
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "name": "Motor Elétrico Trifásico 10HP",
+      "category": "Motores",
+      "price": 2850,
+      "stock": 15,
+      "description": "Motor de alta eficiência para aplicações industriais. Construído com materiais de alta qualidade e proteção IP55.",
+      "specifications": [
+        "10 HP",
+        "220/380V",
+        "1750 RPM",
+        "Proteção IP55",
+        "Classe de isolamento F",
+        "Eficiência 95%"
+      ],
+      "image": "/uploads/default-motor.jpg",
+      "images": [],
+      "status": "ativo",
+      "featured": true,
+      "createdAt": "2026-02-04T14:53:03.538Z",
+      "updatedAt": "2026-02-04T14:53:03.538Z"
+    },
+    {
+      "id": 2,
+      "name": "Gerador de Energia 50kVA",
+      "category": "Geradores",
+      "price": 12500,
+      "stock": 8,
+      "description": "Gerador elétrico para standby ou uso contínuo. Equipamento silencioso com painel digital de controle.",
+      "specifications": [
+        "50 kVA",
+        "Trifásico",
+        "Motor Diesel",
+        "Painel digital",
+        "Silencioso",
+        "Automatic Start"
+      ],
+      "image": "/uploads/default-gerador.jpg",
+      "images": [],
+      "status": "ativo",
+      "featured": true,
+      "createdAt": "2026-02-04T14:53:03.538Z",
+      "updatedAt": "2026-02-04T14:53:03.538Z"
+    },
+    {
+      "id": 3,
+      "name": "Transformador Industrial 100kVA",
+      "category": "Transformadores",
+      "price": 8750,
+      "stock": 5,
+      "description": "Transformador de alta potência para distribuição de energia em ambientes industriais.",
+      "specifications": [
+        "100 kVA",
+        "Alta eficiência",
+        "Resfriamento a óleo",
+        "Proteção térmica",
+        "Isolação classe H"
+      ],
+      "image": "/uploads/default-transformador.jpg",
+      "images": [],
+      "status": "ativo",
+      "featured": false,
+      "createdAt": "2026-02-04T14:53:03.538Z",
+      "updatedAt": "2026-02-04T14:53:03.538Z"
+    }
+  ],
+  "clients": [
+    {
+      "id": 1,
+      "name": "Indústrias ABC Ltda",
+      "email": "contato@abc.com",
+      "phone": "(11) 3456-7890",
+      "company": "Indústrias ABC",
+      "address": "Rua Industrial, 123 - São Paulo/SP",
+      "cpfCnpj": "12.345.678/0001-90",
+      "status": "ativo",
+      "createdAt": "2026-02-04T14:53:03.538Z"
+    },
+    {
+      "id": 2,
+      "name": "João Silva",
+      "email": "joao@empresa.com",
+      "phone": "(11) 98765-4321",
+      "company": "Mecânica Silva",
+      "address": "Av. das Indústrias, 456 - Campinas/SP",
+      "cpfCnpj": "123.456.789-00",
+      "status": "ativo",
+      "createdAt": "2026-02-04T14:53:03.538Z"
+    }
+  ],
+  "vendors": [
+    {
+      "id": 1,
+      "name": "Carlos Souza",
+      "email": "carlos@eletromaquinas.com",
+      "phone": "(11) 99999-8888",
+      "commission": 5,
+      "status": "ativo",
+      "createdAt": "2026-02-04T14:53:03.538Z"
+    }
+  ],
+  "sales": [
+    {
+      "id": 1,
+      "orderNumber": "ORD20230001",
+      "clientId": 1,
+      "clientName": "Indústrias ABC Ltda",
+      "vendorId": 1,
+      "vendorName": "Carlos Souza",
+      "items": [
+        {
+          "productId": 1,
+          "productName": "Motor Elétrico Trifásico 10HP",
+          "quantity": 2,
+          "price": 2850
+        },
+        {
+          "productId": 3,
+          "productName": "Transformador Industrial 100kVA",
+          "quantity": 1,
+          "price": 8750
+        }
+      ],
+      "subtotal": 14450,
+      "discount": 0,
+      "shipping": 150,
+      "total": 14600,
+      "status": "entregue",
+      "paymentMethod": "boleto",
+      "paymentStatus": "pago",
+      "notes": "Entrega agendada para próxima semana",
+      "createdAt": "2023-10-15T00:00:00.000Z",
+      "updatedAt": "2023-10-20T00:00:00.000Z"
+    },
+    {
+      "id": 2,
+      "orderNumber": "ORD20230002",
+      "clientId": 2,
+      "clientName": "João Silva",
+      "vendorId": 1,
+      "vendorName": "Carlos Souza",
+      "items": [
+        {
+          "productId": 2,
+          "productName": "Gerador de Energia 50kVA",
+          "quantity": 1,
+          "price": 12500
+        }
+      ],
+      "subtotal": 12500,
+      "discount": 500,
+      "shipping": 200,
+      "total": 12200,
+      "status": "processando",
+      "paymentMethod": "cartao",
+      "paymentStatus": "pago",
+      "notes": "",
+      "createdAt": "2023-10-18T00:00:00.000Z",
+      "updatedAt": "2023-10-18T00:00:00.000Z"
+    }
+  ],
+  "orders": [],
+  "categories": [
+    "Motores",
+    "Geradores",
+    "Transformadores",
+    "Compressores",
+    "Ferramentas",
+    "Painéis Elétricos",
+    "Disjuntores"
+  ],
+  "settings": {
+    "companyName": "EletroMáquinas",
+    "companyEmail": "contato@eletromaquinas.com",
+    "companyPhone": "(11) 3456-7890",
+    "companyAddress": "Av. Industrial, 1234 - São Paulo/SP",
+    "shippingCost": 50,
+    "freeShippingMin": 1000,
+    "taxRate": 0
+  }
+}
