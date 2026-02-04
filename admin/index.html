@@ -5,32 +5,365 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - EletroMáquinas</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #0056b3;
+            --secondary: #00a8ff;
             --accent: #ff6b00;
+            --success: #28a745;
+            --warning: #ffc107;
+            --danger: #dc3545;
             --light: #f8f9fa;
-            --dark: #333;
+            --dark: #343a40;
+            --gray: #6c757d;
+            --sidebar-width: 250px;
+            --header-height: 60px;
+            --shadow: 0 4px 12px rgba(0,0,0,0.1);
+            --radius: 8px;
         }
         
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
         
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: #f5f7fa;
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--dark);
+            color: white;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            transition: transform 0.3s;
+            z-index: 1000;
+        }
+        
+        .sidebar-header {
+            padding: 20px;
+            background: rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .sidebar-header i { font-size: 2rem; color: var(--accent); }
+        .sidebar-header h2 { font-size: 1.2rem; }
+        .sidebar-header span { color: var(--accent); }
+        
+        .sidebar-menu {
+            list-style: none;
+            padding: 20px 0;
+        }
+        
+        .sidebar-menu li a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 20px;
+            color: #ddd;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .sidebar-menu li a:hover {
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+        
+        .sidebar-menu li.active a {
+            background: var(--primary);
+            color: white;
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            min-height: 100vh;
+        }
+        
+        /* Topbar */
+        .topbar {
+            height: var(--header-height);
+            background: white;
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        
+        .logout-btn {
+            padding: 8px 15px;
+            background: var(--danger);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .logout-btn:hover {
+            background: #c82333;
+        }
+        
+        /* Content Area */
+        .content {
+            padding: 30px;
+        }
+        
+        .page-title {
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .page-title h1 {
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        /* Cards */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            margin-bottom: 15px;
+        }
+        
+        .card-icon.products { background: var(--primary); }
+        .card-icon.clients { background: var(--success); }
+        .card-icon.sales { background: var(--accent); }
+        .card-icon.revenue { background: var(--warning); }
+        
+        .card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+        
+        .card p {
+            color: var(--gray);
+        }
+        
+        /* Tables */
+        .table-container {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        thead {
+            background: var(--primary);
+            color: white;
+        }
+        
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        tbody tr:hover {
+            background: #f8f9fa;
+        }
+        
+        /* Buttons */
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #004494;
+        }
+        
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+        
+        .btn-warning {
+            background: var(--warning);
+            color: var(--dark);
+        }
+        
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+        
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 0.9rem;
+        }
+        
+        /* Forms */
+        .form-container {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--radius);
+            font-family: 'Open Sans', sans-serif;
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 30px;
+        }
+        
+        /* Image Upload */
+        .image-upload {
+            border: 2px dashed #ddd;
+            border-radius: var(--radius);
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 20px;
+        }
+        
+        .image-upload:hover {
+            border-color: var(--primary);
+            background: #f8f9fa;
+        }
+        
+        .image-upload i {
+            font-size: 3rem;
+            color: var(--gray);
+            margin-bottom: 15px;
+        }
+        
+        .image-preview {
+            max-width: 300px;
+            max-height: 200px;
+            object-fit: contain;
+            border-radius: var(--radius);
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+        }
+        
+        /* Login Page */
         .login-container {
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background: linear-gradient(135deg, var(--primary), #00a8ff);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
         }
         
         .login-card {
             background: white;
-            border-radius: 10px;
+            border-radius: var(--radius);
             padding: 40px;
             width: 100%;
             max-width: 400px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            box-shadow: var(--shadow);
         }
         
         .login-logo {
@@ -52,114 +385,88 @@
             color: var(--accent);
         }
         
-        .form-group {
+        /* Tabs */
+        .tabs {
+            display: flex;
             margin-bottom: 20px;
+            border-bottom: 1px solid #dee2e6;
         }
         
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-        
-        .form-group input {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 1rem;
-        }
-        
-        .btn {
-            width: 100%;
-            padding: 12px;
-            background: var(--primary);
-            color: white;
+        .tab {
+            flex: 1;
+            padding: 15px;
+            background: none;
             border: none;
-            border-radius: 5px;
-            font-size: 1rem;
             font-weight: 600;
+            color: var(--gray);
             cursor: pointer;
-            margin-top: 10px;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
         }
         
-        .btn:hover {
-            background: #004494;
-        }
-        
-        .admin-panel {
-            display: none;
-            min-height: 100vh;
-            background: var(--light);
-        }
-        
-        .sidebar {
-            width: 250px;
-            background: var(--dark);
-            color: white;
-            position: fixed;
-            height: 100vh;
-        }
-        
-        .sidebar-header {
-            padding: 20px;
-            background: rgba(0,0,0,0.2);
-        }
-        
-        .sidebar-menu {
-            padding: 20px 0;
-        }
-        
-        .sidebar-menu a {
-            display: block;
-            padding: 15px 20px;
-            color: #ddd;
-            text-decoration: none;
-        }
-        
-        .sidebar-menu a:hover {
-            background: rgba(255,255,255,0.1);
-        }
-        
-        .main-content {
-            margin-left: 250px;
-            padding: 20px;
-        }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .stat-card {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        
-        .stat-card h3 {
-            font-size: 1.8rem;
+        .tab.active {
             color: var(--primary);
+            border-bottom-color: var(--primary);
         }
         
-        @media (max-width: 768px) {
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
             .sidebar {
-                width: 100%;
-                height: auto;
-                position: relative;
+                transform: translateX(-100%);
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
             }
             
             .main-content {
                 margin-left: 0;
             }
+            
+            .menu-toggle {
+                display: block;
+            }
+        }
+        
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--primary);
+            cursor: pointer;
+        }
+        
+        @media (max-width: 768px) {
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .table-container {
+                overflow-x: auto;
+            }
+            
+            table {
+                min-width: 600px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Login -->
+    <!-- Login Screen (inicial) -->
     <div id="loginScreen" class="login-container">
         <div class="login-card">
             <div class="login-logo">
@@ -168,66 +475,364 @@
                 <p>Painel Administrativo</p>
             </div>
             
-            <div class="form-group">
-                <label for="email">E-mail</label>
-                <input type="email" id="email" placeholder="admin@eletromaquinas.com">
+            <div class="tabs">
+                <button class="tab active" data-tab="login">Login</button>
             </div>
             
-            <div class="form-group">
-                <label for="password">Senha</label>
-                <input type="password" id="password" placeholder="••••••••">
-            </div>
-            
-            <button class="btn" onclick="login()">
-                <i class="fas fa-sign-in-alt"></i> Entrar
-            </button>
-            
-            <div style="margin-top: 20px; text-align: center; color: #666;">
-                <small>Demo: admin@eletromaquinas.com / admin123</small>
+            <div id="loginTab" class="tab-content active">
+                <div class="form-group">
+                    <label for="loginEmail">E-mail</label>
+                    <input type="email" id="loginEmail" placeholder="admin@eletromaquinas.com">
+                </div>
+                
+                <div class="form-group">
+                    <label for="loginPassword">Senha</label>
+                    <input type="password" id="loginPassword" placeholder="••••••••">
+                </div>
+                
+                <button class="btn btn-primary btn-block" onclick="login()">
+                    <i class="fas fa-sign-in-alt"></i> Entrar
+                </button>
             </div>
         </div>
     </div>
     
-    <!-- Admin Panel -->
-    <div id="adminPanel" class="admin-panel">
-        <div class="sidebar">
+    <!-- Admin Dashboard (após login) -->
+    <div id="adminPanel" style="display: none;">
+        <!-- Sidebar -->
+        <nav class="sidebar" id="sidebar">
             <div class="sidebar-header">
-                <h2><i class="fas fa-industry"></i> EletroMáquinas</h2>
+                <i class="fas fa-industry"></i>
+                <h2>Eletro<span>Máquinas</span></h2>
             </div>
-            <div class="sidebar-menu">
-                <a href="#"><i class="fas fa-home"></i> Dashboard</a>
-                <a href="#"><i class="fas fa-cogs"></i> Produtos</a>
-                <a href="#"><i class="fas fa-users"></i> Clientes</a>
-                <a href="#"><i class="fas fa-shopping-cart"></i> Pedidos</a>
-                <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Sair</a>
-            </div>
-        </div>
+            
+            <ul class="sidebar-menu">
+                <li class="active" data-page="dashboard">
+                    <a href="#">
+                        <i class="fas fa-home"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li data-page="products">
+                    <a href="#">
+                        <i class="fas fa-cogs"></i>
+                        <span>Produtos</span>
+                    </a>
+                </li>
+                <li data-page="add-product">
+                    <a href="#">
+                        <i class="fas fa-plus-circle"></i>
+                        <span>Adicionar Produto</span>
+                    </a>
+                </li>
+                <li data-page="clients">
+                    <a href="#">
+                        <i class="fas fa-users"></i>
+                        <span>Clientes</span>
+                    </a>
+                </li>
+                <li data-page="orders">
+                    <a href="#">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>Pedidos</span>
+                    </a>
+                </li>
+                <li data-page="categories">
+                    <a href="#">
+                        <i class="fas fa-tags"></i>
+                        <span>Categorias</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        
+        <!-- Main Content -->
         <div class="main-content">
-            <h1>Dashboard</h1>
-            <div class="stats-grid" id="statsGrid">
-                <!-- Stats serão carregados aqui -->
-            </div>
-            <div style="background: white; padding: 20px; border-radius: 8px;">
-                <h3>Sistema de Demonstração</h3>
-                <p>Esta é uma versão demo do sistema EletroMáquinas.</p>
-                <p><strong>Funcionalidades disponíveis:</strong></p>
-                <ul style="margin-top: 10px; padding-left: 20px;">
-                    <li>Catálogo de produtos</li>
-                    <li>Painel administrativo</li>
-                    <li>Sistema de login</li>
-                    <li>Dashboard com estatísticas</li>
-                </ul>
-                <p style="margin-top: 20px; color: #666;">
-                    Para uma versão completa com todas as funcionalidades, entre em contato.
-                </p>
+            <!-- Topbar -->
+            <header class="topbar">
+                <button class="menu-toggle" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <div class="user-info">
+                    <div class="user-avatar" id="userAvatar">A</div>
+                    <div>
+                        <strong id="userName">Administrador</strong>
+                        <small id="userEmail">admin@eletromaquinas.com</small>
+                    </div>
+                    <button class="logout-btn" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i> Sair
+                    </button>
+                </div>
+            </header>
+            
+            <!-- Content Pages -->
+            <div class="content">
+                <!-- Dashboard -->
+                <div id="dashboardPage" class="page">
+                    <div class="page-title">
+                        <h1><i class="fas fa-home"></i> Dashboard</h1>
+                    </div>
+                    
+                    <div class="cards-grid" id="statsCards">
+                        <!-- Cards serão carregados dinamicamente -->
+                    </div>
+                    
+                    <div class="table-container">
+                        <h3>Produtos com Baixo Estoque</h3>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Produto</th>
+                                    <th>Estoque</th>
+                                    <th>Categoria</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="lowStockTable">
+                                <!-- Carregado dinamicamente -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="table-container">
+                        <h3>Pedidos Recentes</h3>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Nº Pedido</th>
+                                    <th>Cliente</th>
+                                    <th>Valor</th>
+                                    <th>Status</th>
+                                    <th>Data</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recentOrdersTable">
+                                <!-- Carregado dinamicamente -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Produtos -->
+                <div id="productsPage" class="page" style="display: none;">
+                    <div class="page-title">
+                        <h1><i class="fas fa-cogs"></i> Gerenciar Produtos</h1>
+                        <button class="btn btn-primary" onclick="showPage('add-product')">
+                            <i class="fas fa-plus"></i> Novo Produto
+                        </button>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Imagem</th>
+                                    <th>Nome</th>
+                                    <th>Categoria</th>
+                                    <th>Preço</th>
+                                    <th>Estoque</th>
+                                    <th>Status</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="productsTable">
+                                <!-- Carregado dinamicamente -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Adicionar/Editar Produto -->
+                <div id="addProductPage" class="page" style="display: none;">
+                    <div class="page-title">
+                        <h1><i class="fas fa-plus-circle"></i> Adicionar Produto</h1>
+                    </div>
+                    
+                    <div class="form-container">
+                        <div class="form-group">
+                            <label for="productName">Nome do Produto *</label>
+                            <input type="text" id="productName" placeholder="Ex: Motor Elétrico 10HP">
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="productCategory">Categoria *</label>
+                                <select id="productCategory">
+                                    <option value="">Selecione...</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="productPrice">Preço (R$) *</label>
+                                <input type="number" id="productPrice" step="0.01" min="0" placeholder="0,00">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="productStock">Estoque *</label>
+                                <input type="number" id="productStock" min="0" placeholder="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="productStatus">Status</label>
+                                <select id="productStatus">
+                                    <option value="ativo">Ativo</option>
+                                    <option value="inativo">Inativo</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="productDescription">Descrição</label>
+                            <textarea id="productDescription" placeholder="Descreva o produto..."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="productSpecs">Especificações (uma por linha)</label>
+                            <textarea id="productSpecs" placeholder="10 HP&#10;220/380V&#10;1750 RPM"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Imagem Principal</label>
+                            <div class="image-upload" onclick="document.getElementById('productImage').click()">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Clique para fazer upload</p>
+                                <small>Formatos: JPG, PNG, GIF, WebP (max 10MB)</small>
+                            </div>
+                            <input type="file" id="productImage" accept="image/*" style="display: none;" onchange="previewImage(this)">
+                            <img id="imagePreview" class="image-preview" style="display: none;">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="productFeatured">
+                                Produto em Destaque
+                            </label>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button class="btn" onclick="showPage('products')">
+                                <i class="fas fa-times"></i> Cancelar
+                            </button>
+                            <button class="btn btn-primary" onclick="saveProduct()">
+                                <i class="fas fa-save"></i> Salvar Produto
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Clientes -->
+                <div id="clientsPage" class="page" style="display: none;">
+                    <div class="page-title">
+                        <h1><i class="fas fa-users"></i> Clientes</h1>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nome</th>
+                                    <th>E-mail</th>
+                                    <th>Telefone</th>
+                                    <th>Empresa</th>
+                                    <th>Data Cadastro</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="clientsTable">
+                                <!-- Carregado dinamicamente -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Pedidos -->
+                <div id="ordersPage" class="page" style="display: none;">
+                    <div class="page-title">
+                        <h1><i class="fas fa-shopping-cart"></i> Pedidos</h1>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Nº Pedido</th>
+                                    <th>Cliente</th>
+                                    <th>Itens</th>
+                                    <th>Valor Total</th>
+                                    <th>Status</th>
+                                    <th>Data</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ordersTable">
+                                <!-- Carregado dinamicamente -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Categorias -->
+                <div id="categoriesPage" class="page" style="display: none;">
+                    <div class="page-title">
+                        <h1><i class="fas fa-tags"></i> Categorias</h1>
+                        <button class="btn btn-primary" onclick="addCategory()">
+                            <i class="fas fa-plus"></i> Nova Categoria
+                        </button>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Quantidade de Produtos</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="categoriesTable">
+                                <!-- Carregado dinamicamente -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    
+
     <script>
+        // Estado global
+        let currentUser = null;
+        let authToken = null;
+        let editingProductId = null;
+        
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', () => {
+            // Verificar se já está logado
+            const savedToken = localStorage.getItem('adminToken');
+            const savedUser = localStorage.getItem('adminUser');
+            
+            if (savedToken && savedUser) {
+                authToken = savedToken;
+                currentUser = JSON.parse(savedUser);
+                showAdminPanel();
+                loadDashboard();
+            }
+            
+            // Configurar navegação
+            setupNavigation();
+            
+            // Carregar categorias no select
+            loadCategories();
+        });
+        
+        // Login
         async function login() {
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
             
             if (!email || !password) {
                 alert('Por favor, preencha todos os campos.');
@@ -235,139 +840,628 @@
             }
             
             try {
-                // Tenta login admin primeiro
                 const response = await fetch('/api/admin/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email, password })
                 });
                 
-                if (!response.ok) {
-                    // Se falhar, tenta login normal
-                    const loginResponse = await fetch('/api/login', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ email, password })
-                    });
-                    
-                    if (!loginResponse.ok) {
-                        throw new Error('Credenciais inválidas');
-                    }
-                    
-                    const result = await loginResponse.json();
-                    
-                    if (result.user.role !== 'admin' && result.user.role !== 'vendedor') {
-                        alert('Acesso restrito a administradores.');
-                        return;
-                    }
-                    
-                    showAdminPanel(result.user);
-                } else {
-                    const result = await response.json();
-                    showAdminPanel(result.user);
-                }
+                const result = await response.json();
                 
+                if (result.success) {
+                    authToken = result.token;
+                    currentUser = result.user;
+                    
+                    // Salvar no localStorage
+                    localStorage.setItem('adminToken', authToken);
+                    localStorage.setItem('adminUser', JSON.stringify(currentUser));
+                    
+                    showAdminPanel();
+                    loadDashboard();
+                } else {
+                    alert(result.error || 'Credenciais inválidas.');
+                }
             } catch (error) {
-                console.error('Login error:', error);
-                
-                // Fallback para demo
-                if (email === 'admin@eletromaquinas.com' && password === 'admin123') {
-                    showAdminPanel({
-                        id: 1,
-                        name: "Administrador",
-                        email: email,
-                        role: "admin"
-                    });
-                } else {
-                    alert('Credenciais inválidas. Use: admin@eletromaquinas.com / admin123');
-                }
+                console.error('Erro no login:', error);
+                alert('Erro ao fazer login. Tente novamente.');
             }
         }
         
-        function showAdminPanel(user) {
-            document.getElementById('loginScreen').style.display = 'none';
-            document.getElementById('adminPanel').style.display = 'block';
-            
-            // Carregar estatísticas
-            loadStats();
+        // Logout
+        function logout() {
+            localStorage.removeItem('adminToken');
+            localStorage.removeItem('adminUser');
+            location.reload();
         }
         
-        async function loadStats() {
+        // Mostrar painel administrativo
+        function showAdminPanel() {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('adminPanel').style.display = 'flex';
+            
+            // Atualizar informações do usuário
+            if (currentUser) {
+                document.getElementById('userName').textContent = currentUser.name;
+                document.getElementById('userEmail').textContent = currentUser.email;
+                document.getElementById('userAvatar').textContent = currentUser.name.charAt(0);
+            }
+        }
+        
+        // Navegação
+        function setupNavigation() {
+            const menuItems = document.querySelectorAll('.sidebar-menu li');
+            
+            menuItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // Remover classe active de todos
+                    menuItems.forEach(i => i.classList.remove('active'));
+                    // Adicionar ao item clicado
+                    this.classList.add('active');
+                    
+                    // Mostrar página correspondente
+                    const page = this.getAttribute('data-page');
+                    showPage(page);
+                });
+            });
+        }
+        
+        // Mostrar página específica
+        function showPage(pageName) {
+            // Esconder todas as páginas
+            document.querySelectorAll('.page').forEach(page => {
+                page.style.display = 'none';
+            });
+            
+            // Mostrar página solicitada
+            const pageElement = document.getElementById(pageName + 'Page');
+            if (pageElement) {
+                pageElement.style.display = 'block';
+            }
+            
+            // Carregar dados da página
+            switch(pageName) {
+                case 'dashboard':
+                    loadDashboard();
+                    break;
+                case 'products':
+                    loadProducts();
+                    break;
+                case 'clients':
+                    loadClients();
+                    break;
+                case 'orders':
+                    loadOrders();
+                    break;
+                case 'categories':
+                    loadCategories();
+                    break;
+                case 'add-product':
+                    resetProductForm();
+                    break;
+            }
+            
+            // Fechar sidebar no mobile
+            if (window.innerWidth < 992) {
+                document.getElementById('sidebar').classList.remove('active');
+            }
+        }
+        
+        // Alternar sidebar no mobile
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+        }
+        
+        // Carregar dashboard
+        async function loadDashboard() {
             try {
                 const response = await fetch('/api/admin/stats', {
-                    headers: {
-                        'Authorization': 'Bearer admin@eletromaquinas.com'
-                    }
+                    headers: { 'Authorization': `Bearer ${authToken}` }
                 });
                 
-                if (response.ok) {
-                    const stats = await response.json();
-                    renderStats(stats);
-                } else {
-                    // Fallback stats
-                    renderStats({
-                        totalProducts: 3,
-                        totalClients: 2,
-                        totalSales: 5,
-                        totalRevenue: 45000,
-                        pendingOrders: 1,
-                        lowStockProducts: 1
-                    });
-                }
+                const stats = await response.json();
+                renderStats(stats);
+                
+                // Carregar produtos com baixo estoque
+                loadLowStockProducts();
+                
+                // Carregar pedidos recentes
+                loadRecentOrders();
+                
             } catch (error) {
-                console.error('Error loading stats:', error);
-                // Fallback stats
-                renderStats({
-                    totalProducts: 3,
-                    totalClients: 2,
-                    totalSales: 5,
-                    totalRevenue: 45000,
-                    pendingOrders: 1,
-                    lowStockProducts: 1
-                });
+                console.error('Erro ao carregar dashboard:', error);
+                if (error.status === 401) logout();
             }
         }
         
         function renderStats(stats) {
-            const grid = document.getElementById('statsGrid');
-            grid.innerHTML = `
-                <div class="stat-card">
+            const cardsContainer = document.getElementById('statsCards');
+            cardsContainer.innerHTML = `
+                <div class="card">
+                    <div class="card-icon products">
+                        <i class="fas fa-cogs"></i>
+                    </div>
                     <h3>${stats.totalProducts}</h3>
                     <p>Produtos</p>
                 </div>
-                <div class="stat-card">
+                <div class="card">
+                    <div class="card-icon clients">
+                        <i class="fas fa-users"></i>
+                    </div>
                     <h3>${stats.totalClients}</h3>
                     <p>Clientes</p>
                 </div>
-                <div class="stat-card">
+                <div class="card">
+                    <div class="card-icon sales">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
                     <h3>${stats.totalSales}</h3>
                     <p>Pedidos</p>
                 </div>
-                <div class="stat-card">
-                    <h3>R$ ${stats.totalRevenue.toLocaleString()}</h3>
+                <div class="card">
+                    <div class="card-icon revenue">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <h3>R$ ${stats.totalRevenue.toFixed(2)}</h3>
                     <p>Receita Total</p>
                 </div>
             `;
         }
         
-        function logout() {
-            document.getElementById('adminPanel').style.display = 'none';
-            document.getElementById('loginScreen').style.display = 'flex';
+        // Carregar produtos
+        async function loadProducts() {
+            try {
+                const response = await fetch('/api/admin/products', {
+                    headers: { 'Authorization': `Bearer ${authToken}` }
+                });
+                
+                const products = await response.json();
+                renderProducts(products);
+                
+            } catch (error) {
+                console.error('Erro ao carregar produtos:', error);
+            }
         }
         
-        // Verificar se já está logado
-        document.addEventListener('DOMContentLoaded', () => {
-            // Simulação de sessão salva (para demo)
-            const demoUser = {
-                id: 1,
-                name: "Administrador",
-                email: "admin@eletromaquinas.com",
-                role: "admin"
-            };
+        function renderProducts(products) {
+            const tableBody = document.getElementById('productsTable');
+            tableBody.innerHTML = '';
             
-            // Para demo, mostrar login diretamente
-            // showAdminPanel(demoUser);
-        });
+            products.forEach(product => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${product.id}</td>
+                    <td>
+                        <img src="${product.image || 'https://via.placeholder.com/50x50'}" 
+                             alt="${product.name}" 
+                             style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;"
+                             onerror="this.src='https://via.placeholder.com/50x50'">
+                    </td>
+                    <td>${product.name}</td>
+                    <td>${product.category}</td>
+                    <td>R$ ${product.price.toFixed(2)}</td>
+                    <td>
+                        <span class="${product.stock < 5 ? 'text-danger' : 'text-success'}">
+                            ${product.stock}
+                        </span>
+                    </td>
+                    <td>
+                        <span class="badge ${product.status === 'ativo' ? 'badge-success' : 'badge-secondary'}">
+                            ${product.status === 'ativo' ? 'Ativo' : 'Inativo'}
+                        </span>
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-warning" onclick="editProduct(${product.id})">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-sm btn-danger" onclick="deleteProduct(${product.id})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+        
+        // Carregar produtos com baixo estoque
+        async function loadLowStockProducts() {
+            try {
+                const response = await fetch('/api/admin/products', {
+                    headers: { 'Authorization': `Bearer ${authToken}` }
+                });
+                
+                const products = await response.json();
+                const lowStock = products.filter(p => p.stock < 5 && p.status === 'ativo');
+                
+                const tableBody = document.getElementById('lowStockTable');
+                tableBody.innerHTML = '';
+                
+                lowStock.forEach(product => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${product.id}</td>
+                        <td>${product.name}</td>
+                        <td class="text-danger">${product.stock}</td>
+                        <td>${product.category}</td>
+                        <td>
+                            <button class="btn btn-sm btn-primary" onclick="editProduct(${product.id})">
+                                <i class="fas fa-edit"></i> Reabastecer
+                            </button>
+                        </td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+                
+            } catch (error) {
+                console.error('Erro ao carregar baixo estoque:', error);
+            }
+        }
+        
+        // Carregar pedidos recentes
+        async function loadRecentOrders() {
+            try {
+                const response = await fetch('/api/admin/orders', {
+                    headers: { 'Authorization': `Bearer ${authToken}` }
+                });
+                
+                const orders = await response.json();
+                const recentOrders = orders.slice(-10).reverse();
+                
+                const tableBody = document.getElementById('recentOrdersTable');
+                tableBody.innerHTML = '';
+                
+                recentOrders.forEach(order => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${order.orderNumber}</td>
+                        <td>${order.clientName || 'Cliente'}</td>
+                        <td>R$ ${order.total?.toFixed(2) || '0.00'}</td>
+                        <td>
+                            <span class="badge ${getStatusBadge(order.status)}">
+                                ${order.status}
+                            </span>
+                        </td>
+                        <td>${new Date(order.createdAt).toLocaleDateString('pt-BR')}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+                
+            } catch (error) {
+                console.error('Erro ao carregar pedidos:', error);
+            }
+        }
+        
+        function getStatusBadge(status) {
+            switch(status) {
+                case 'pendente': return 'badge-warning';
+                case 'pago': return 'badge-success';
+                case 'cancelado': return 'badge-danger';
+                default: return 'badge-secondary';
+            }
+        }
+        
+        // Carregar clientes
+        async function loadClients() {
+            try {
+                const response = await fetch('/api/admin/clients', {
+                    headers: { 'Authorization': `Bearer ${authToken}` }
+                });
+                
+                const clients = await response.json();
+                renderClients(clients);
+                
+            } catch (error) {
+                console.error('Erro ao carregar clientes:', error);
+            }
+        }
+        
+        function renderClients(clients) {
+            const tableBody = document.getElementById('clientsTable');
+            tableBody.innerHTML = '';
+            
+            clients.forEach(client => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${client.id}</td>
+                    <td>${client.name}</td>
+                    <td>${client.email}</td>
+                    <td>${client.phone || '-'}</td>
+                    <td>${client.company || '-'}</td>
+                    <td>${new Date(client.createdAt).toLocaleDateString('pt-BR')}</td>
+                    <td>
+                        <button class="btn btn-sm btn-primary">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+        
+        // Carregar pedidos
+        async function loadOrders() {
+            try {
+                const response = await fetch('/api/admin/orders', {
+                    headers: { 'Authorization': `Bearer ${authToken}` }
+                });
+                
+                const orders = await response.json();
+                renderOrders(orders);
+                
+            } catch (error) {
+                console.error('Erro ao carregar pedidos:', error);
+            }
+        }
+        
+        function renderOrders(orders) {
+            const tableBody = document.getElementById('ordersTable');
+            tableBody.innerHTML = '';
+            
+            orders.forEach(order => {
+                const itemCount = order.items ? order.items.length : 0;
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${order.orderNumber}</td>
+                    <td>${order.clientName || 'Cliente'}</td>
+                    <td>${itemCount} item(s)</td>
+                    <td>R$ ${order.total?.toFixed(2) || '0.00'}</td>
+                    <td>
+                        <span class="badge ${getStatusBadge(order.status)}">
+                            ${order.status}
+                        </span>
+                    </td>
+                    <td>${new Date(order.createdAt).toLocaleDateString('pt-BR')}</td>
+                    <td>
+                        <button class="btn btn-sm btn-primary">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+        
+        // Carregar categorias
+        async function loadCategories() {
+            try {
+                const response = await fetch('/api/categories');
+                const categories = await response.json();
+                
+                // Popular select no formulário
+                const categorySelect = document.getElementById('productCategory');
+                categorySelect.innerHTML = '<option value="">Selecione...</option>';
+                
+                categories.forEach(category => {
+                    const option = document.createElement('option');
+                    option.value = category;
+                    option.textContent = category;
+                    categorySelect.appendChild(option);
+                });
+                
+                // Popular tabela de categorias (se estiver na página)
+                const categoriesTable = document.getElementById('categoriesTable');
+                if (categoriesTable) {
+                    categoriesTable.innerHTML = '';
+                    
+                    categories.forEach(category => {
+                        // Contar produtos nesta categoria
+                        const productCount = 0; // Em produção, buscar da API
+                        
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${category}</td>
+                            <td>${productCount}</td>
+                            <td>
+                                <button class="btn btn-sm btn-danger" onclick="removeCategory('${category}')">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        `;
+                        categoriesTable.appendChild(row);
+                    });
+                }
+                
+            } catch (error) {
+                console.error('Erro ao carregar categorias:', error);
+            }
+        }
+        
+        // Preview de imagem
+        function previewImage(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const preview = document.getElementById('imagePreview');
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        
+        // Salvar produto
+        async function saveProduct() {
+            const name = document.getElementById('productName').value;
+            const category = document.getElementById('productCategory').value;
+            const price = document.getElementById('productPrice').value;
+            const stock = document.getElementById('productStock').value;
+            const description = document.getElementById('productDescription').value;
+            const specs = document.getElementById('productSpecs').value;
+            const status = document.getElementById('productStatus').value;
+            const featured = document.getElementById('productFeatured').checked;
+            const imageInput = document.getElementById('productImage');
+            
+            // Validação
+            if (!name || !category || !price || !stock) {
+                alert('Por favor, preencha todos os campos obrigatórios.');
+                return;
+            }
+            
+            const formData = new FormData();
+            formData.append('name', name);
+            formData.append('category', category);
+            formData.append('price', price);
+            formData.append('stock', stock);
+            formData.append('description', description || '');
+            formData.append('specifications', specs.split('\n').filter(s => s.trim()));
+            formData.append('status', status);
+            formData.append('featured', featured);
+            
+            if (imageInput.files[0]) {
+                formData.append('image', imageInput.files[0]);
+            }
+            
+            try {
+                const url = editingProductId ? 
+                    `/api/admin/products/${editingProductId}` : 
+                    '/api/admin/products';
+                
+                const method = editingProductId ? 'PUT' : 'POST';
+                
+                const response = await fetch(url, {
+                    method: method,
+                    headers: { 'Authorization': `Bearer ${authToken}` },
+                    body: formData
+                });
+                
+                if (response.ok) {
+                    const product = await response.json();
+                    alert(editingProductId ? 'Produto atualizado!' : 'Produto criado!');
+                    
+                    // Limpar formulário e voltar para lista
+                    resetProductForm();
+                    showPage('products');
+                    loadProducts();
+                    loadDashboard();
+                    
+                } else {
+                    const error = await response.json();
+                    alert(error.error || 'Erro ao salvar produto.');
+                }
+                
+            } catch (error) {
+                console.error('Erro ao salvar produto:', error);
+                alert('Erro ao salvar produto.');
+            }
+        }
+        
+        // Editar produto
+        async function editProduct(productId) {
+            try {
+                const response = await fetch(`/api/products/${productId}`);
+                const product = await response.json();
+                
+                // Preencher formulário
+                document.getElementById('productName').value = product.name;
+                document.getElementById('productCategory').value = product.category;
+                document.getElementById('productPrice').value = product.price;
+                document.getElementById('productStock').value = product.stock;
+                document.getElementById('productDescription').value = product.description || '';
+                document.getElementById('productSpecs').value = product.specifications?.join('\n') || '';
+                document.getElementById('productStatus').value = product.status;
+                document.getElementById('productFeatured').checked = product.featured || false;
+                
+                // Mostrar imagem atual
+                if (product.image) {
+                    const preview = document.getElementById('imagePreview');
+                    preview.src = product.image;
+                    preview.style.display = 'block';
+                }
+                
+                editingProductId = productId;
+                showPage('add-product');
+                
+            } catch (error) {
+                console.error('Erro ao carregar produto:', error);
+                alert('Erro ao carregar produto.');
+            }
+        }
+        
+        // Deletar produto
+        async function deleteProduct(productId) {
+            if (!confirm('Tem certeza que deseja remover este produto?')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`/api/admin/products/${productId}`, {
+                    method: 'DELETE',
+                    headers: { 'Authorization': `Bearer ${authToken}` }
+                });
+                
+                if (response.ok) {
+                    alert('Produto removido!');
+                    loadProducts();
+                    loadDashboard();
+                } else {
+                    alert('Erro ao remover produto.');
+                }
+                
+            } catch (error) {
+                console.error('Erro ao deletar produto:', error);
+                alert('Erro ao deletar produto.');
+            }
+        }
+        
+        // Resetar formulário de produto
+        function resetProductForm() {
+            document.getElementById('productName').value = '';
+            document.getElementById('productCategory').value = '';
+            document.getElementById('productPrice').value = '';
+            document.getElementById('productStock').value = '';
+            document.getElementById('productDescription').value = '';
+            document.getElementById('productSpecs').value = '';
+            document.getElementById('productStatus').value = 'ativo';
+            document.getElementById('productFeatured').checked = false;
+            document.getElementById('productImage').value = '';
+            document.getElementById('imagePreview').style.display = 'none';
+            editingProductId = null;
+        }
+        
+        // Adicionar categoria
+        function addCategory() {
+            const categoryName = prompt('Digite o nome da nova categoria:');
+            if (categoryName && categoryName.trim()) {
+                // Em produção, enviaria para API
+                alert(`Categoria "${categoryName}" adicionada!`);
+                loadCategories();
+            }
+        }
+        
+        // Remover categoria
+        function removeCategory(categoryName) {
+            if (confirm(`Remover categoria "${categoryName}"?`)) {
+                // Em produção, enviaria para API
+                alert(`Categoria "${categoryName}" removida!`);
+                loadCategories();
+            }
+        }
+        
+        // Adicionar alguns estilos dinâmicos
+        const style = document.createElement('style');
+        style.textContent = `
+            .badge {
+                display: inline-block;
+                padding: 5px 10px;
+                border-radius: 20px;
+                font-size: 0.8rem;
+                font-weight: 600;
+            }
+            
+            .badge-success { background: #d4edda; color: #155724; }
+            .badge-warning { background: #fff3cd; color: #856404; }
+            .badge-danger { background: #f8d7da; color: #721c24; }
+            .badge-secondary { background: #e2e3e5; color: #383d41; }
+            
+            .text-success { color: var(--success); }
+            .text-danger { color: var(--danger); }
+            .text-warning { color: var(--warning); }
+            
+            .btn-block {
+                display: block;
+                width: 100%;
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>
