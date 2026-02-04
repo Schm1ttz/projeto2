@@ -348,75 +348,6 @@
             margin-bottom: 10px;
         }
         
-        /* Login Page */
-        .login-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-        }
-        
-        .login-card {
-            background: white;
-            border-radius: var(--radius);
-            padding: 40px;
-            width: 100%;
-            max-width: 400px;
-            box-shadow: var(--shadow);
-        }
-        
-        .login-logo {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        
-        .login-logo i {
-            font-size: 3rem;
-            color: var(--primary);
-            margin-bottom: 15px;
-        }
-        
-        .login-logo h1 {
-            color: var(--primary);
-        }
-        
-        .login-logo span {
-            color: var(--accent);
-        }
-        
-        /* Tabs */
-        .tabs {
-            display: flex;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #dee2e6;
-        }
-        
-        .tab {
-            flex: 1;
-            padding: 15px;
-            background: none;
-            border: none;
-            font-weight: 600;
-            color: var(--gray);
-            cursor: pointer;
-            transition: all 0.3s;
-            border-bottom: 3px solid transparent;
-        }
-        
-        .tab.active {
-            color: var(--primary);
-            border-bottom-color: var(--primary);
-        }
-        
-        .tab-content {
-            display: none;
-        }
-        
-        .tab-content.active {
-            display: block;
-        }
-        
         /* Responsive */
         @media (max-width: 992px) {
             .sidebar {
@@ -466,11 +397,8 @@
     </style>
 </head>
 <body>
-    <!-- Login Screen (inicial) -->
-   
-    
-    <!-- Admin Dashboard (após login) -->
-    <div id="adminPanel" style="display: none;">
+    <!-- Admin Dashboard -->
+    <div id="adminPanel">
         <!-- Sidebar -->
         <nav class="sidebar" id="sidebar">
             <div class="sidebar-header">
@@ -547,7 +475,34 @@
                     </div>
                     
                     <div class="cards-grid" id="statsCards">
-                        <!-- Cards serão carregados dinamicamente -->
+                        <div class="card">
+                            <div class="card-icon products">
+                                <i class="fas fa-cogs"></i>
+                            </div>
+                            <h3>24</h3>
+                            <p>Produtos</p>
+                        </div>
+                        <div class="card">
+                            <div class="card-icon clients">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <h3>156</h3>
+                            <p>Clientes</p>
+                        </div>
+                        <div class="card">
+                            <div class="card-icon sales">
+                                <i class="fas fa-shopping-cart"></i>
+                            </div>
+                            <h3>48</h3>
+                            <p>Pedidos</p>
+                        </div>
+                        <div class="card">
+                            <div class="card-icon revenue">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                            <h3>R$ 89.540,00</h3>
+                            <p>Receita Total</p>
+                        </div>
                     </div>
                     
                     <div class="table-container">
@@ -563,7 +518,28 @@
                                 </tr>
                             </thead>
                             <tbody id="lowStockTable">
-                                <!-- Carregado dinamicamente -->
+                                <tr>
+                                    <td>15</td>
+                                    <td>Motor Elétrico 5HP</td>
+                                    <td style="color: #dc3545;">3</td>
+                                    <td>Motores</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-primary" onclick="editProduct(15)">
+                                            <i class="fas fa-edit"></i> Reabastecer
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>22</td>
+                                    <td>Inversor de Frequência 7.5kW</td>
+                                    <td style="color: #dc3545;">2</td>
+                                    <td>Inversores</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-primary" onclick="editProduct(22)">
+                                            <i class="fas fa-edit"></i> Reabastecer
+                                        </button>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -581,7 +557,27 @@
                                 </tr>
                             </thead>
                             <tbody id="recentOrdersTable">
-                                <!-- Carregado dinamicamente -->
+                                <tr>
+                                    <td>#2024-048</td>
+                                    <td>Indústria ABC Ltda</td>
+                                    <td>R$ 8.750,00</td>
+                                    <td><span class="badge badge-success">Pago</span></td>
+                                    <td>15/01/2024</td>
+                                </tr>
+                                <tr>
+                                    <td>#2024-047</td>
+                                    <td>Metalúrgica XYZ</td>
+                                    <td>R$ 3.240,00</td>
+                                    <td><span class="badge badge-warning">Pendente</span></td>
+                                    <td>14/01/2024</td>
+                                </tr>
+                                <tr>
+                                    <td>#2024-046</td>
+                                    <td>Auto Peças 123</td>
+                                    <td>R$ 12.500,00</td>
+                                    <td><span class="badge badge-success">Pago</span></td>
+                                    <td>13/01/2024</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -611,7 +607,48 @@
                                 </tr>
                             </thead>
                             <tbody id="productsTable">
-                                <!-- Carregado dinamicamente -->
+                                <tr>
+                                    <td>1</td>
+                                    <td>
+                                        <img src="https://via.placeholder.com/50x50" 
+                                             alt="Motor" 
+                                             style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;">
+                                    </td>
+                                    <td>Motor Elétrico 10HP</td>
+                                    <td>Motores</td>
+                                    <td>R$ 4.850,00</td>
+                                    <td><span class="text-success">12</span></td>
+                                    <td><span class="badge badge-success">Ativo</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-warning" onclick="editProduct(1)">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-danger" onclick="deleteProduct(1)">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>
+                                        <img src="https://via.placeholder.com/50x50" 
+                                             alt="Inversor" 
+                                             style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;">
+                                    </td>
+                                    <td>Inversor de Frequência 10kW</td>
+                                    <td>Inversores</td>
+                                    <td>R$ 3.290,00</td>
+                                    <td><span class="text-success">8</span></td>
+                                    <td><span class="badge badge-success">Ativo</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-warning" onclick="editProduct(2)">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-danger" onclick="deleteProduct(2)">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -634,6 +671,10 @@
                                 <label for="productCategory">Categoria *</label>
                                 <select id="productCategory">
                                     <option value="">Selecione...</option>
+                                    <option value="Motores">Motores</option>
+                                    <option value="Inversores">Inversores</option>
+                                    <option value="Transformadores">Transformadores</option>
+                                    <option value="Geradores">Geradores</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -715,7 +756,19 @@
                                 </tr>
                             </thead>
                             <tbody id="clientsTable">
-                                <!-- Carregado dinamicamente -->
+                                <tr>
+                                    <td>1</td>
+                                    <td>João Silva</td>
+                                    <td>joao@empresa.com</td>
+                                    <td>(11) 99999-9999</td>
+                                    <td>Indústria ABC Ltda</td>
+                                    <td>15/01/2023</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-primary">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -741,7 +794,19 @@
                                 </tr>
                             </thead>
                             <tbody id="ordersTable">
-                                <!-- Carregado dinamicamente -->
+                                <tr>
+                                    <td>#2024-048</td>
+                                    <td>Indústria ABC Ltda</td>
+                                    <td>3 item(s)</td>
+                                    <td>R$ 8.750,00</td>
+                                    <td><span class="badge badge-success">Pago</span></td>
+                                    <td>15/01/2024</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-primary">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -766,7 +831,24 @@
                                 </tr>
                             </thead>
                             <tbody id="categoriesTable">
-                                <!-- Carregado dinamicamente -->
+                                <tr>
+                                    <td>Motores</td>
+                                    <td>8</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-danger" onclick="removeCategory('Motores')">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Inversores</td>
+                                    <td>6</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-danger" onclick="removeCategory('Inversores')">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -777,85 +859,24 @@
 
     <script>
         // Estado global
-        let currentUser = null;
-        let authToken = null;
+        let currentUser = {
+            name: "Administrador",
+            email: "admin@eletromaquinas.com"
+        };
         let editingProductId = null;
         
         // Inicialização
         document.addEventListener('DOMContentLoaded', () => {
-            // Verificar se já está logado
-            const savedToken = localStorage.getItem('adminToken');
-            const savedUser = localStorage.getItem('adminUser');
-            
-            if (savedToken && savedUser) {
-                authToken = savedToken;
-                currentUser = JSON.parse(savedUser);
-                showAdminPanel();
-                loadDashboard();
-            }
-            
             // Configurar navegação
             setupNavigation();
-            
-            // Carregar categorias no select
-            loadCategories();
+            loadDashboard();
         });
-        
-        // Login
-        async function login() {
-            const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPassword').value;
-            
-            if (!email || !password) {
-                alert('Por favor, preencha todos os campos.');
-                return;
-            }
-            
-            try {
-                const response = await fetch('/api/admin/login', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email, password })
-                });
-                
-                const result = await response.json();
-                
-                if (result.success) {
-                    authToken = result.token;
-                    currentUser = result.user;
-                    
-                    // Salvar no localStorage
-                    localStorage.setItem('adminToken', authToken);
-                    localStorage.setItem('adminUser', JSON.stringify(currentUser));
-                    
-                    showAdminPanel();
-                    loadDashboard();
-                } else {
-                    alert(result.error || 'Credenciais inválidas.');
-                }
-            } catch (error) {
-                console.error('Erro no login:', error);
-                alert('Erro ao fazer login. Tente novamente.');
-            }
-        }
         
         // Logout
         function logout() {
-            localStorage.removeItem('adminToken');
-            localStorage.removeItem('adminUser');
-            location.reload();
-        }
-        
-        // Mostrar painel administrativo
-        function showAdminPanel() {
-            document.getElementById('loginScreen').style.display = 'none';
-            document.getElementById('adminPanel').style.display = 'flex';
-            
-            // Atualizar informações do usuário
-            if (currentUser) {
-                document.getElementById('userName').textContent = currentUser.name;
-                document.getElementById('userEmail').textContent = currentUser.email;
-                document.getElementById('userAvatar').textContent = currentUser.name.charAt(0);
+            if (confirm('Deseja realmente sair do sistema?')) {
+                // Em um sistema real, aqui limparia tokens e redirecionaria para login
+                alert('Sessão encerrada. Em um sistema real, você seria redirecionado para o login.');
             }
         }
         
@@ -890,28 +911,6 @@
                 pageElement.style.display = 'block';
             }
             
-            // Carregar dados da página
-            switch(pageName) {
-                case 'dashboard':
-                    loadDashboard();
-                    break;
-                case 'products':
-                    loadProducts();
-                    break;
-                case 'clients':
-                    loadClients();
-                    break;
-                case 'orders':
-                    loadOrders();
-                    break;
-                case 'categories':
-                    loadCategories();
-                    break;
-                case 'add-product':
-                    resetProductForm();
-                    break;
-            }
-            
             // Fechar sidebar no mobile
             if (window.innerWidth < 992) {
                 document.getElementById('sidebar').classList.remove('active');
@@ -924,317 +923,9 @@
         }
         
         // Carregar dashboard
-        async function loadDashboard() {
-            try {
-                const response = await fetch('/api/admin/stats', {
-                    headers: { 'Authorization': `Bearer ${authToken}` }
-                });
-                
-                const stats = await response.json();
-                renderStats(stats);
-                
-                // Carregar produtos com baixo estoque
-                loadLowStockProducts();
-                
-                // Carregar pedidos recentes
-                loadRecentOrders();
-                
-            } catch (error) {
-                console.error('Erro ao carregar dashboard:', error);
-                if (error.status === 401) logout();
-            }
-        }
-        
-        function renderStats(stats) {
-            const cardsContainer = document.getElementById('statsCards');
-            cardsContainer.innerHTML = `
-                <div class="card">
-                    <div class="card-icon products">
-                        <i class="fas fa-cogs"></i>
-                    </div>
-                    <h3>${stats.totalProducts}</h3>
-                    <p>Produtos</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon clients">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <h3>${stats.totalClients}</h3>
-                    <p>Clientes</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon sales">
-                        <i class="fas fa-shopping-cart"></i>
-                    </div>
-                    <h3>${stats.totalSales}</h3>
-                    <p>Pedidos</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon revenue">
-                        <i class="fas fa-dollar-sign"></i>
-                    </div>
-                    <h3>R$ ${stats.totalRevenue.toFixed(2)}</h3>
-                    <p>Receita Total</p>
-                </div>
-            `;
-        }
-        
-        // Carregar produtos
-        async function loadProducts() {
-            try {
-                const response = await fetch('/api/admin/products', {
-                    headers: { 'Authorization': `Bearer ${authToken}` }
-                });
-                
-                const products = await response.json();
-                renderProducts(products);
-                
-            } catch (error) {
-                console.error('Erro ao carregar produtos:', error);
-            }
-        }
-        
-        function renderProducts(products) {
-            const tableBody = document.getElementById('productsTable');
-            tableBody.innerHTML = '';
-            
-            products.forEach(product => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${product.id}</td>
-                    <td>
-                        <img src="${product.image || 'https://via.placeholder.com/50x50'}" 
-                             alt="${product.name}" 
-                             style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;"
-                             onerror="this.src='https://via.placeholder.com/50x50'">
-                    </td>
-                    <td>${product.name}</td>
-                    <td>${product.category}</td>
-                    <td>R$ ${product.price.toFixed(2)}</td>
-                    <td>
-                        <span class="${product.stock < 5 ? 'text-danger' : 'text-success'}">
-                            ${product.stock}
-                        </span>
-                    </td>
-                    <td>
-                        <span class="badge ${product.status === 'ativo' ? 'badge-success' : 'badge-secondary'}">
-                            ${product.status === 'ativo' ? 'Ativo' : 'Inativo'}
-                        </span>
-                    </td>
-                    <td>
-                        <button class="btn btn-sm btn-warning" onclick="editProduct(${product.id})">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button class="btn btn-sm btn-danger" onclick="deleteProduct(${product.id})">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </td>
-                `;
-                tableBody.appendChild(row);
-            });
-        }
-        
-        // Carregar produtos com baixo estoque
-        async function loadLowStockProducts() {
-            try {
-                const response = await fetch('/api/admin/products', {
-                    headers: { 'Authorization': `Bearer ${authToken}` }
-                });
-                
-                const products = await response.json();
-                const lowStock = products.filter(p => p.stock < 5 && p.status === 'ativo');
-                
-                const tableBody = document.getElementById('lowStockTable');
-                tableBody.innerHTML = '';
-                
-                lowStock.forEach(product => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${product.id}</td>
-                        <td>${product.name}</td>
-                        <td class="text-danger">${product.stock}</td>
-                        <td>${product.category}</td>
-                        <td>
-                            <button class="btn btn-sm btn-primary" onclick="editProduct(${product.id})">
-                                <i class="fas fa-edit"></i> Reabastecer
-                            </button>
-                        </td>
-                    `;
-                    tableBody.appendChild(row);
-                });
-                
-            } catch (error) {
-                console.error('Erro ao carregar baixo estoque:', error);
-            }
-        }
-        
-        // Carregar pedidos recentes
-        async function loadRecentOrders() {
-            try {
-                const response = await fetch('/api/admin/orders', {
-                    headers: { 'Authorization': `Bearer ${authToken}` }
-                });
-                
-                const orders = await response.json();
-                const recentOrders = orders.slice(-10).reverse();
-                
-                const tableBody = document.getElementById('recentOrdersTable');
-                tableBody.innerHTML = '';
-                
-                recentOrders.forEach(order => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${order.orderNumber}</td>
-                        <td>${order.clientName || 'Cliente'}</td>
-                        <td>R$ ${order.total?.toFixed(2) || '0.00'}</td>
-                        <td>
-                            <span class="badge ${getStatusBadge(order.status)}">
-                                ${order.status}
-                            </span>
-                        </td>
-                        <td>${new Date(order.createdAt).toLocaleDateString('pt-BR')}</td>
-                    `;
-                    tableBody.appendChild(row);
-                });
-                
-            } catch (error) {
-                console.error('Erro ao carregar pedidos:', error);
-            }
-        }
-        
-        function getStatusBadge(status) {
-            switch(status) {
-                case 'pendente': return 'badge-warning';
-                case 'pago': return 'badge-success';
-                case 'cancelado': return 'badge-danger';
-                default: return 'badge-secondary';
-            }
-        }
-        
-        // Carregar clientes
-        async function loadClients() {
-            try {
-                const response = await fetch('/api/admin/clients', {
-                    headers: { 'Authorization': `Bearer ${authToken}` }
-                });
-                
-                const clients = await response.json();
-                renderClients(clients);
-                
-            } catch (error) {
-                console.error('Erro ao carregar clientes:', error);
-            }
-        }
-        
-        function renderClients(clients) {
-            const tableBody = document.getElementById('clientsTable');
-            tableBody.innerHTML = '';
-            
-            clients.forEach(client => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${client.id}</td>
-                    <td>${client.name}</td>
-                    <td>${client.email}</td>
-                    <td>${client.phone || '-'}</td>
-                    <td>${client.company || '-'}</td>
-                    <td>${new Date(client.createdAt).toLocaleDateString('pt-BR')}</td>
-                    <td>
-                        <button class="btn btn-sm btn-primary">
-                            <i class="fas fa-eye"></i>
-                        </button>
-                    </td>
-                `;
-                tableBody.appendChild(row);
-            });
-        }
-        
-        // Carregar pedidos
-        async function loadOrders() {
-            try {
-                const response = await fetch('/api/admin/orders', {
-                    headers: { 'Authorization': `Bearer ${authToken}` }
-                });
-                
-                const orders = await response.json();
-                renderOrders(orders);
-                
-            } catch (error) {
-                console.error('Erro ao carregar pedidos:', error);
-            }
-        }
-        
-        function renderOrders(orders) {
-            const tableBody = document.getElementById('ordersTable');
-            tableBody.innerHTML = '';
-            
-            orders.forEach(order => {
-                const itemCount = order.items ? order.items.length : 0;
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${order.orderNumber}</td>
-                    <td>${order.clientName || 'Cliente'}</td>
-                    <td>${itemCount} item(s)</td>
-                    <td>R$ ${order.total?.toFixed(2) || '0.00'}</td>
-                    <td>
-                        <span class="badge ${getStatusBadge(order.status)}">
-                            ${order.status}
-                        </span>
-                    </td>
-                    <td>${new Date(order.createdAt).toLocaleDateString('pt-BR')}</td>
-                    <td>
-                        <button class="btn btn-sm btn-primary">
-                            <i class="fas fa-eye"></i>
-                        </button>
-                    </td>
-                `;
-                tableBody.appendChild(row);
-            });
-        }
-        
-        // Carregar categorias
-        async function loadCategories() {
-            try {
-                const response = await fetch('/api/categories');
-                const categories = await response.json();
-                
-                // Popular select no formulário
-                const categorySelect = document.getElementById('productCategory');
-                categorySelect.innerHTML = '<option value="">Selecione...</option>';
-                
-                categories.forEach(category => {
-                    const option = document.createElement('option');
-                    option.value = category;
-                    option.textContent = category;
-                    categorySelect.appendChild(option);
-                });
-                
-                // Popular tabela de categorias (se estiver na página)
-                const categoriesTable = document.getElementById('categoriesTable');
-                if (categoriesTable) {
-                    categoriesTable.innerHTML = '';
-                    
-                    categories.forEach(category => {
-                        // Contar produtos nesta categoria
-                        const productCount = 0; // Em produção, buscar da API
-                        
-                        const row = document.createElement('tr');
-                        row.innerHTML = `
-                            <td>${category}</td>
-                            <td>${productCount}</td>
-                            <td>
-                                <button class="btn btn-sm btn-danger" onclick="removeCategory('${category}')">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </td>
-                        `;
-                        categoriesTable.appendChild(row);
-                    });
-                }
-                
-            } catch (error) {
-                console.error('Erro ao carregar categorias:', error);
-            }
+        function loadDashboard() {
+            // Dados já estão carregados estaticamente no HTML
+            console.log('Dashboard carregado');
         }
         
         // Preview de imagem
@@ -1251,126 +942,61 @@
         }
         
         // Salvar produto
-        async function saveProduct() {
+        function saveProduct() {
             const name = document.getElementById('productName').value;
             const category = document.getElementById('productCategory').value;
             const price = document.getElementById('productPrice').value;
             const stock = document.getElementById('productStock').value;
-            const description = document.getElementById('productDescription').value;
-            const specs = document.getElementById('productSpecs').value;
-            const status = document.getElementById('productStatus').value;
-            const featured = document.getElementById('productFeatured').checked;
-            const imageInput = document.getElementById('productImage');
             
-            // Validação
+            // Validação básica
             if (!name || !category || !price || !stock) {
                 alert('Por favor, preencha todos os campos obrigatórios.');
                 return;
             }
             
-            const formData = new FormData();
-            formData.append('name', name);
-            formData.append('category', category);
-            formData.append('price', price);
-            formData.append('stock', stock);
-            formData.append('description', description || '');
-            formData.append('specifications', specs.split('\n').filter(s => s.trim()));
-            formData.append('status', status);
-            formData.append('featured', featured);
-            
-            if (imageInput.files[0]) {
-                formData.append('image', imageInput.files[0]);
+            if (editingProductId) {
+                alert(`Produto "${name}" atualizado com sucesso!`);
+            } else {
+                alert(`Produto "${name}" criado com sucesso!`);
             }
             
-            try {
-                const url = editingProductId ? 
-                    `/api/admin/products/${editingProductId}` : 
-                    '/api/admin/products';
-                
-                const method = editingProductId ? 'PUT' : 'POST';
-                
-                const response = await fetch(url, {
-                    method: method,
-                    headers: { 'Authorization': `Bearer ${authToken}` },
-                    body: formData
-                });
-                
-                if (response.ok) {
-                    const product = await response.json();
-                    alert(editingProductId ? 'Produto atualizado!' : 'Produto criado!');
-                    
-                    // Limpar formulário e voltar para lista
-                    resetProductForm();
-                    showPage('products');
-                    loadProducts();
-                    loadDashboard();
-                    
-                } else {
-                    const error = await response.json();
-                    alert(error.error || 'Erro ao salvar produto.');
-                }
-                
-            } catch (error) {
-                console.error('Erro ao salvar produto:', error);
-                alert('Erro ao salvar produto.');
-            }
+            // Resetar formulário e voltar para lista
+            resetProductForm();
+            showPage('products');
         }
         
         // Editar produto
-        async function editProduct(productId) {
-            try {
-                const response = await fetch(`/api/products/${productId}`);
-                const product = await response.json();
-                
-                // Preencher formulário
-                document.getElementById('productName').value = product.name;
-                document.getElementById('productCategory').value = product.category;
-                document.getElementById('productPrice').value = product.price;
-                document.getElementById('productStock').value = product.stock;
-                document.getElementById('productDescription').value = product.description || '';
-                document.getElementById('productSpecs').value = product.specifications?.join('\n') || '';
-                document.getElementById('productStatus').value = product.status;
-                document.getElementById('productFeatured').checked = product.featured || false;
-                
-                // Mostrar imagem atual
-                if (product.image) {
-                    const preview = document.getElementById('imagePreview');
-                    preview.src = product.image;
-                    preview.style.display = 'block';
-                }
-                
-                editingProductId = productId;
-                showPage('add-product');
-                
-            } catch (error) {
-                console.error('Erro ao carregar produto:', error);
-                alert('Erro ao carregar produto.');
-            }
+        function editProduct(productId) {
+            // Simulando dados do produto
+            const product = {
+                id: productId,
+                name: "Motor Elétrico 10HP",
+                category: "Motores",
+                price: 4850.00,
+                stock: 12,
+                description: "Motor elétrico trifásico 10HP, 1750 RPM",
+                status: "ativo",
+                featured: true
+            };
+            
+            // Preencher formulário
+            document.getElementById('productName').value = product.name;
+            document.getElementById('productCategory').value = product.category;
+            document.getElementById('productPrice').value = product.price;
+            document.getElementById('productStock').value = product.stock;
+            document.getElementById('productDescription').value = product.description || '';
+            document.getElementById('productSpecs').value = "10 HP\n1750 RPM\nTrifásico";
+            document.getElementById('productStatus').value = product.status;
+            document.getElementById('productFeatured').checked = product.featured || false;
+            
+            editingProductId = productId;
+            showPage('add-product');
         }
         
         // Deletar produto
-        async function deleteProduct(productId) {
-            if (!confirm('Tem certeza que deseja remover este produto?')) {
-                return;
-            }
-            
-            try {
-                const response = await fetch(`/api/admin/products/${productId}`, {
-                    method: 'DELETE',
-                    headers: { 'Authorization': `Bearer ${authToken}` }
-                });
-                
-                if (response.ok) {
-                    alert('Produto removido!');
-                    loadProducts();
-                    loadDashboard();
-                } else {
-                    alert('Erro ao remover produto.');
-                }
-                
-            } catch (error) {
-                console.error('Erro ao deletar produto:', error);
-                alert('Erro ao deletar produto.');
+        function deleteProduct(productId) {
+            if (confirm('Tem certeza que deseja remover este produto?')) {
+                alert(`Produto #${productId} removido com sucesso!`);
             }
         }
         
@@ -1385,7 +1011,9 @@
             document.getElementById('productStatus').value = 'ativo';
             document.getElementById('productFeatured').checked = false;
             document.getElementById('productImage').value = '';
-            document.getElementById('imagePreview').style.display = 'none';
+            const preview = document.getElementById('imagePreview');
+            preview.style.display = 'none';
+            preview.src = '';
             editingProductId = null;
         }
         
@@ -1393,18 +1021,14 @@
         function addCategory() {
             const categoryName = prompt('Digite o nome da nova categoria:');
             if (categoryName && categoryName.trim()) {
-                // Em produção, enviaria para API
                 alert(`Categoria "${categoryName}" adicionada!`);
-                loadCategories();
             }
         }
         
         // Remover categoria
         function removeCategory(categoryName) {
             if (confirm(`Remover categoria "${categoryName}"?`)) {
-                // Em produção, enviaria para API
                 alert(`Categoria "${categoryName}" removida!`);
-                loadCategories();
             }
         }
         
@@ -1437,4 +1061,3 @@
     </script>
 </body>
 </html>
-
